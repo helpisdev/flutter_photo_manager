@@ -2,7 +2,7 @@ group 'com.fluttercandies.photo_manager'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.7.22'
+    ext.kotlin_version = '1.9.10'
     repositories {
         google()
         mavenCentral()
@@ -29,14 +29,37 @@ android {
         namespace 'com.flutterandies.photo_manager'
     }
 
-    compileSdkVersion 34
+    buildToolsVersion = "34.0.0"
+    compileSdk 34
+    ndkVersion "26.1.10909125"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17.toString()
+        targetCompatibility JavaVersion.VERSION_17.toString()
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+        freeCompilerArgs = ['-Xjvm-default=all-compatibility']
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    java {
+        toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main.java.srcDirs += "src/main/java"
+        main.kotlin.srcDirs += "src/main/kotlin"
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
